@@ -1,0 +1,7 @@
+C:\Users\User\source\repos\Algoritmos de cifrado\bin\Debug\Algoritmos de cifrado.exe.config
+C:\Users\User\source\repos\Algoritmos de cifrado\bin\Debug\Algoritmos de cifrado.exe
+C:\Users\User\source\repos\Algoritmos de cifrado\bin\Debug\Algoritmos de cifrado.pdb
+C:\Users\User\source\repos\Algoritmos de cifrado\obj\Debug\Algoritmos de cifrado.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\Algoritmos de cifrado\obj\Debug\Algoritmos de cifrado.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\Algoritmos de cifrado\obj\Debug\Algoritmos de cifrado.exe
+C:\Users\User\source\repos\Algoritmos de cifrado\obj\Debug\Algoritmos de cifrado.pdb

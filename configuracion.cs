@@ -8,8 +8,8 @@ namespace Algoritmos_de_cifrado
 {
     internal class configuracion
     {
-        string _strMensaje = "cienañosdesoledad";
-        string _strLlave = "A&";
+        string _strMensaje = "CPYOIMEQARPRSLQF"; //"laverdadquesediga";
+        string _strLlave = "algoritmoclasico";
         bool _boolCifrar = true;
 
         int _intCaracteresPorRotacion = 5;

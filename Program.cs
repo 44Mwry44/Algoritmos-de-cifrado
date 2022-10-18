@@ -29,6 +29,8 @@ namespace Algoritmos_de_cifrado
                 Console.WriteLine("Ingrese una opcion para continuar.\n");
                 Console.WriteLine("1.- Modificar parametros.");
                 Console.WriteLine("2.- Alberti.");
+                Console.WriteLine("3.- Vigenere - Por Tabla.");
+                Console.WriteLine("3.- Vigenere - Por modulo de 26.");
                 Console.WriteLine("0.- Salir.");
                 opcion = Console.ReadKey().KeyChar - 48;
 
@@ -70,6 +72,44 @@ namespace Algoritmos_de_cifrado
                                 Console.WriteLine("Criptograma: " + Algoritmos.Alberti(miConfiguracion.DiscoExterno, miConfiguracion.DiscoInterno, miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.CaracteresPorRotacion, miConfiguracion.Rotacion, miConfiguracion.Direccion, miConfiguracion.Cifrar));
                             }
                             catch(Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
+
+                            Console.ReadKey();
+
+                            break;
+                        }
+                    case 3:
+                        {
+                            Console.Clear();
+
+                            try
+                            {
+                                Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
+                                Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                                Console.WriteLine("Criptograma: " + Algoritmos.VigenereM1(miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.Cifrar));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
+
+                            Console.ReadKey();
+                            
+                            break;
+                        }
+                    case 4:
+                        {
+                            Console.Clear();
+
+                            try
+                            {
+                                Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
+                                Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                                Console.WriteLine("Criptograma: " + Algoritmos.VigenereM2(miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.Cifrar));
+                            }
+                            catch (Exception error)
                             {
                                 Console.WriteLine("Error: " + error.Message);
                             }
@@ -166,7 +206,6 @@ namespace Algoritmos_de_cifrado
                     do
                     {
                         aux = Console.ReadKey();
-                        //Console.WriteLine("aux = " + aux);
 
                         if (aux.Key == ConsoleKey.C)
                         {

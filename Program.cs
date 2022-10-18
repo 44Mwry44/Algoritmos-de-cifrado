@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,17 +14,25 @@ namespace Algoritmos_de_cifrado
             bool salir = false;
             int opcion;
 
-            List<char> discoExterno = new List<char> { 'A', '0', 'D', 'X', '1', 'C', 'G', 'K', 'B', '8', 'M', '4', 'R', 'F', 'U', 'I', 'Y', '2', 'L', '6', 'Ñ', 'S', 'H', 'Q', '5', 'W', '7', 'E', 'V', '9', 'N', 'J', 'P', 'Z', 'T', '3'};
-            List<char> discoInterno = new List<char> { 'a', '!', 'x', '0', 'j', 't', '@', '$', 'g', 'z', 'w', '&', 'e', 'o', 'p', 'h', '%', 'ñ', 'd', 'r', '=', 'c', 's', '?', 'm', '#', 'n', 'f', 'k', 'u', 'l', 'i', 'b', 'y', 'q', 'v'};
+            configuracion miConfiguracion = new configuracion();
 
-            while(!salir)
+            while (!salir)
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese una opcion para continuar.\n");
-                Console.WriteLine("0.- Salir.");
-                opcion = int.Parse(Console.ReadLine());
 
-                switch(opcion)
+                Console.WriteLine("Datos---------------------------------");
+                Console.WriteLine("Mensaje: \t" + miConfiguracion.Mensaje);
+                Console.WriteLine("Llave: \t\t" + miConfiguracion.Llave);
+                Console.WriteLine("Modo: \t\t" + (miConfiguracion.Cifrar ? "Cifrar" : "Descifrar"));
+                Console.WriteLine("--------------------------------------\n");
+
+                Console.WriteLine("Ingrese una opcion para continuar.\n");
+                Console.WriteLine("1.- Modificar parametros.");
+                Console.WriteLine("2.- Alberti.");
+                Console.WriteLine("0.- Salir.");
+                opcion = Console.ReadKey().KeyChar - 48;
+
+                switch (opcion)
                 {
                     case 0:
                         {
@@ -32,53 +41,43 @@ namespace Algoritmos_de_cifrado
                         }
                     case 1:
                         {
+                            ModificarConfiguracion(ref miConfiguracion);
+                            break;
+                        }
+                    case 2:
+                        {
                             Console.Clear();
-                            Console.WriteLine("Ingrese el mensaje en claro");
-                            string mensaje = Console.ReadLine();
 
-                            Console.WriteLine("Ingrese la llave");
-                            string llave = Console.ReadLine();
+                            Console.WriteLine("Desea utilizar esta configuracion?");
+                            Console.WriteLine("Caracter por rotacion: " + miConfiguracion.CaracteresPorRotacion.ToString());
+                            Console.WriteLine("Rotacion: " + miConfiguracion.Rotacion.ToString());
+                            Console.WriteLine("Direccion: " + (miConfiguracion.Direccion ? "Derecha" : "Izquierda"));
+                            Console.WriteLine("(Y/N)");
 
-                            Console.WriteLine("Ingrese los caracteres por rotacion - Cuantos caracteres se Cifraran/Descifraran antes de rotar");
-                            int caracteresPorRotacion = int.Parse(Console.ReadLine());
-
-                            Console.WriteLine("Ingrese la cantidad de caracteres a rotar");
-                            int rotacion = int.Parse(Console.ReadLine());
-
-                            Console.WriteLine("Rotar izquierda o derecha? - (I)zquierda | (D)erecha");
-                            string aux;
-                            bool direccion = true;
-                            do
+                            ConsoleKeyInfo aux = Console.ReadKey();
+                            
+                            if(aux.Key == ConsoleKey.N)
                             {
-                                 aux = Console.ReadLine();
-                                Console.WriteLine("aux = " + aux);
-                                switch (aux)
-                                {
-                                    case "i":
-                                        {
-                                            direccion = false;
-                                            break;
-                                        }
-                                    case "d":
-                                        {
-                                            direccion = true;
-                                            break;
-                                        }
-                                    default:
-                                        {
-                                            Console.WriteLine("Ingrese una direcion valida");
-                                            break;
-                                        }
-                                }
-                            } while (aux != "i\n" || aux != "d\n");
+                                ModificarConfiguracion(ref miConfiguracion);
+                            }
 
                             Console.Clear();
-                            Console.WriteLine("Mensaje: " + mensaje);
-                            Console.WriteLine("Llave: " + llave);
-                            Console.WriteLine("Criptograma: " + Alberti(discoExterno, discoInterno, mensaje, llave, caracteresPorRotacion, rotacion, direccion));
+                            
+                            try
+                            {
+                                Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
+                                Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                                Console.WriteLine("Criptograma: " + Algoritmos.Alberti(miConfiguracion.DiscoExterno, miConfiguracion.DiscoInterno, miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.CaracteresPorRotacion, miConfiguracion.Rotacion, miConfiguracion.Direccion, miConfiguracion.Cifrar));
+                            }
+                            catch(Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
+
+                            Console.ReadKey();
 
                             break;
-                        } 
+                        }
                     default:
                         {
                             Console.WriteLine("Ingrese una opcion valida - Presione cualquier tecla para continuar");
@@ -88,90 +87,106 @@ namespace Algoritmos_de_cifrado
                 }
             }
         }
-
-        //direccion = false | izquierda
-        //direccion = true  | derecha
-        static string Alberti(List<char> discoExterno, List<char> discoInterno, string mensaje, string llave, int caracteresPorGiro, int rotacion, bool direccion)
+        static void ModificarConfiguracion(ref configuracion miConfiguracion)
         {
-            int aux = 1;
-            string criptograma = "";
-            for(int posicion = 0; posicion < mensaje.Length; posicion++)
+            ConsoleKeyInfo opcion;
+            do
             {
-                if (aux == caracteresPorGiro)
+                Console.Clear();
+                Console.WriteLine("Seleccione la configuracion a modificar");
+                Console.WriteLine("1.- Mensaje");
+                Console.WriteLine("2.- Llave");
+                Console.WriteLine("3.- Caracteres por rotacion (Alberti)");
+                Console.WriteLine("4.- Rotacion (Alberti)");
+                Console.WriteLine("5.- Direccion");
+                Console.WriteLine("6.- Cifrar/Descifrar");
+                Console.WriteLine("--Presione Esc para salir.");
+                opcion = Console.ReadKey();
+
+                if (opcion.Key == ConsoleKey.D1)
                 {
-                    Alberti_AjustarMatriz(discoExterno, discoInterno, rotacion, direccion);
-                    aux = 1;
+                    Console.Clear();
+                    Console.WriteLine("Ingrese el mensaje a cifrar");
+                    miConfiguracion.Mensaje = Console.ReadLine();
                 }
-                int charIndex = discoExterno.FindIndex(item => mensaje[posicion] == item);
-                criptograma += discoInterno.ElementAt(charIndex);
-                aux++;
-            }
 
-            return criptograma;
-        }
-
-        static void Alberti_AjustarMatriz(List<char> discoExterno, List<char> discoInterno, string llave)
-        {
-            int posicionLlave1 = discoExterno.FindIndex(item => llave[0] == item);
-            Console.WriteLine("Posicion 1: " + posicionLlave1.ToString());
-            
-            int posicionLlave2 = discoInterno.FindIndex(item => llave[1] == item);
-            Console.WriteLine("Posicion 2: " + posicionLlave2.ToString());
-
-            char aux = ' ';
-
-            while (posicionLlave1 != posicionLlave2)
-            {
-                for (int posicion = 35; posicion > 0; posicion--)
+                if (opcion.Key == ConsoleKey.D2)
                 {
-                    if (posicion == 35)
-                    {
-                        aux = discoInterno[posicion];
-                    }
-
-                    discoInterno[posicion] = discoInterno[posicion - 1];
+                    Console.Clear();
+                    Console.WriteLine("Ingrese la llave");
+                    miConfiguracion.Llave = Console.ReadLine();
                 }
-                discoInterno[0] = aux;
-                posicionLlave1 = discoExterno.FindIndex(item => llave[0] == item);
-                posicionLlave2 = discoInterno.FindIndex(item => llave[1] == item);
-            }
-        }
 
-        static void Alberti_AjustarMatriz(List<char> discoExterno, List<char> discoInterno, int ajuste, bool direccion)
-        {
-            char aux = ' ';
-            if(direccion)
-            {
-                for (int x = 0; x < ajuste; x++)
+                if(opcion.Key == ConsoleKey.D3)
                 {
-                    for (int posicion = 35; posicion > 0; posicion--)
+                    Console.Clear();
+                    Console.WriteLine("Ingrese los caracteres por rotacion - Cuantos caracteres se Cifraran/Descifraran antes de rotar");
+                    miConfiguracion.CaracteresPorRotacion = int.Parse(Console.ReadLine());
+                }
+
+                if (opcion.Key == ConsoleKey.D4)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Ingrese la cantidad de caracteres a rotar");
+                    miConfiguracion.Rotacion = int.Parse(Console.ReadLine());
+                }
+
+                if (opcion.Key == ConsoleKey.D5)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Rotar izquierda o derecha? - (I)zquierda | (D)erecha");
+                    ConsoleKeyInfo aux;
+                    do
                     {
-                        if(posicion == 35)
+                        aux = Console.ReadKey();
+                        //Console.WriteLine("aux = " + aux);
+
+                        if (aux.Key == ConsoleKey.I)
                         {
-                            aux = discoInterno[posicion];
-                        }
-                        
-                        discoInterno[posicion] = discoInterno[posicion - 1];
-                    }
-                    discoInterno[0] = aux;
-                }
-            }
-            else
-            {
-                for (int x = 0; x < ajuste; x++)
-                {
-                    for (int posicion = 0; posicion < 35; posicion++)
-                    {
-                        if(posicion == 0)
-                        {
-                            aux = discoInterno[posicion];
+                            miConfiguracion.Direccion = false;
+                            break;
                         }
 
-                        discoInterno[posicion] = discoInterno[posicion + 1];
-                    }
-                    discoInterno[35] = aux;
+                        if (aux.Key == ConsoleKey.D)
+                        {
+                            miConfiguracion.Direccion = true;
+                            break;
+                        }
+
+                        Console.WriteLine("Ingrese una direccion valida");
+
+                    } while (aux.Key != ConsoleKey.I || aux.Key != ConsoleKey.D);
                 }
-            }
+
+                if (opcion.Key == ConsoleKey.D6)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Cifrar o Descifrar? - (C)ifrar | (D)escifrar");
+                    ConsoleKeyInfo aux;
+                    do
+                    {
+                        aux = Console.ReadKey();
+                        //Console.WriteLine("aux = " + aux);
+
+                        if (aux.Key == ConsoleKey.C)
+                        {
+                            miConfiguracion.Cifrar = true;
+                            break;
+                        }
+
+                        if (aux.Key == ConsoleKey.D)
+                        {
+                            miConfiguracion.Cifrar = false;
+                            break;
+                        }
+
+                        Console.WriteLine("Ingrese una opcion valida");
+
+                    } while (aux.Key != ConsoleKey.C || aux.Key != ConsoleKey.D);
+                }
+
+            } while (opcion.Key != ConsoleKey.Escape);
         }
+
     }
 }

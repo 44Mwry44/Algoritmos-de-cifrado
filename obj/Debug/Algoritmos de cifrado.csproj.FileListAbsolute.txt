@@ -5,3 +5,11 @@ C:\Users\User\source\repos\Algoritmos de cifrado\obj\Debug\Algoritmos de cifrado
 C:\Users\User\source\repos\Algoritmos de cifrado\obj\Debug\Algoritmos de cifrado.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\Algoritmos de cifrado\obj\Debug\Algoritmos de cifrado.exe
 C:\Users\User\source\repos\Algoritmos de cifrado\obj\Debug\Algoritmos de cifrado.pdb
+E:\Repos\Algoritmos-de-cifrado\bin\Debug\Algoritmos de cifrado.exe.config
+E:\Repos\Algoritmos-de-cifrado\bin\Debug\Algoritmos de cifrado.exe
+E:\Repos\Algoritmos-de-cifrado\bin\Debug\Algoritmos de cifrado.pdb
+E:\Repos\Algoritmos-de-cifrado\obj\Debug\Algoritmos de cifrado.csproj.AssemblyReference.cache
+E:\Repos\Algoritmos-de-cifrado\obj\Debug\Algoritmos de cifrado.csproj.SuggestedBindingRedirects.cache
+E:\Repos\Algoritmos-de-cifrado\obj\Debug\Algoritmos de cifrado.csproj.CoreCompileInputs.cache
+E:\Repos\Algoritmos-de-cifrado\obj\Debug\Algoritmos de cifrado.exe
+E:\Repos\Algoritmos-de-cifrado\obj\Debug\Algoritmos de cifrado.pdb

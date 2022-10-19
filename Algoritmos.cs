@@ -10,9 +10,10 @@ namespace Algoritmos_de_cifrado
     {
         //direccion = false | izquierda
         //direccion = true  | derecha
-        public static string Alberti(List<char> discoExterno, List<char> discoInterno, string mensaje, string llave, int caracteresPorRotacion, int rotacion, bool direccion, bool cifrar)
+        public static string Alberti(List<char> discoExterno, List<char> discoInterno, string mensaje, string llave, int caracteresPorRotacion, int rotacion, bool direccion, bool cifrar, memoria memoria)
         {
             int aux = 1;
+            int numRotacion = 1;
             string criptograma = "";
 
             if(discoExterno.Count != discoInterno.Count)
@@ -37,7 +38,21 @@ namespace Algoritmos_de_cifrado
 
             Alberti_AjustarMatriz(discoExterno, discoInterno, llave);
 
-            if(cifrar)
+            if (memoria != null)
+            {
+                List<int> tempRotacion = new List<int>();
+
+                foreach (char caracter in discoInterno)
+                {
+                    tempRotacion.Add(caracter);
+                }
+
+                Proceso miProceso = new Proceso("Alberti", "Ajuste inicial", tempRotacion, true);
+
+                memoria.Procesos.Add(miProceso);
+            }
+
+            if (cifrar)
             {
                 mensaje = mensaje.ToUpper();
             }
@@ -53,6 +68,21 @@ namespace Algoritmos_de_cifrado
                 if (aux > caracteresPorRotacion && caracteresPorRotacion != 0)
                 {
                     Alberti_AjustarMatriz(discoExterno, discoInterno, rotacion, direccion);
+
+                    if(memoria != null)
+                    {
+                        List<int> tempRotacion = new List<int>();
+                        
+                        foreach(char caracter in discoInterno)
+                        {
+                            tempRotacion.Add(caracter);
+                        }
+
+                        Proceso miProceso = new Proceso("Alberti", "Rotacion #" + numRotacion.ToString(), tempRotacion, true);
+                        memoria.Procesos.Add(miProceso);
+                        numRotacion++;
+                    }
+
                     aux = 1;
                 }
 

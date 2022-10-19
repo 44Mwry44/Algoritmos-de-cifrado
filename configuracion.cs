@@ -9,7 +9,7 @@ namespace Algoritmos_de_cifrado
     internal class configuracion
     {
         string _strMensaje = "cesarelemperador";//"laverdadquesediga";.////"CPYOIMEQARPRSLQF";
-        string _strLlave = "algoritmoclasico";
+        string _strLlave = "A&";//"algoritmoclasico";
         bool _boolCifrar = true;
         bool _boolMostrarProceso = false;
         bool _boolMemoria = true;

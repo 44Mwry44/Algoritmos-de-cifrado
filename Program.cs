@@ -72,11 +72,19 @@ namespace Algoritmos_de_cifrado
                             {
                                 Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
                                 Console.WriteLine("Llave: " + miConfiguracion.Llave);
-                                Console.WriteLine("Criptograma: " + Algoritmos.Alberti(miConfiguracion.DiscoExterno, miConfiguracion.DiscoInterno, miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.CaracteresPorRotacion, miConfiguracion.Rotacion, miConfiguracion.Direccion, miConfiguracion.Cifrar));
+                                Console.WriteLine("Criptograma: " + Algoritmos.Alberti(miConfiguracion.DiscoExterno, miConfiguracion.DiscoInterno, miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.CaracteresPorRotacion, miConfiguracion.Rotacion, miConfiguracion.Direccion, miConfiguracion.Cifrar, (miConfiguracion.Memoria ? miMemoria : null)));
                             }
                             catch(Exception error)
                             {
                                 Console.WriteLine("Error: " + error.Message);
+                            }
+
+                            if (miConfiguracion.Memoria)
+                            {
+                                foreach (Proceso proceso in miMemoria.Procesos)
+                                {
+                                    Console.WriteLine(proceso.ToString());
+                                }
                             }
 
                             Console.ReadKey();

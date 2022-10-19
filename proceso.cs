@@ -47,6 +47,12 @@ namespace Algoritmos_de_cifrado
             {
                 foreach (int intValor in _lstLista)
                 {
+                    if(_strMetodo == "Alberti")
+                    {
+                        strResultado += (char)(intValor) + "   ";
+                        continue;
+                    }
+
                     strResultado += (char)(intValor + 65) + "  ";
                 }
                 strResultado += "\n";
@@ -54,14 +60,33 @@ namespace Algoritmos_de_cifrado
 
             foreach (int intValor in _lstLista)
             {
-                if(intValor.ToString().Length > 1)
+                if (_strMetodo == "Alberti")
+                {
+
+                    if (intValor.ToString().Length == 2)
+                    {
+                        strResultado += intValor.ToString() + "  ";
+                        continue;
+                    }
+
+                    if (intValor.ToString().Length == 3)
+                    {
+                        strResultado += intValor.ToString() + " ";
+                        continue;
+                    }
+
+                    strResultado += intValor.ToString() + "   ";
+                    continue;
+                }
+
+                if (intValor.ToString().Length == 1)
                 {
                     strResultado += intValor.ToString() + " ";
+                    continue;
                 }
-                else
-                {
-                    strResultado += intValor.ToString() + "  ";
-                }
+
+                strResultado += intValor.ToString() + "  ";
+                
             }
 
             return Nombre + "\n" + strResultado;

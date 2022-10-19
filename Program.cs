@@ -15,22 +15,24 @@ namespace Algoritmos_de_cifrado
             int opcion;
 
             configuracion miConfiguracion = new configuracion();
+            memoria miMemoria = new memoria();
 
             while (!salir)
-            {
+            {   
                 Console.Clear();
 
                 Console.WriteLine("Datos---------------------------------");
                 Console.WriteLine("Mensaje: \t" + miConfiguracion.Mensaje);
                 Console.WriteLine("Llave: \t\t" + miConfiguracion.Llave);
                 Console.WriteLine("Modo: \t\t" + (miConfiguracion.Cifrar ? "Cifrar" : "Descifrar"));
+                Console.WriteLine("Memoria: \t" + (miConfiguracion.Memoria ? "Activada" : "Apagada"));
                 Console.WriteLine("--------------------------------------\n");
 
                 Console.WriteLine("Ingrese una opcion para continuar.\n");
                 Console.WriteLine("1.- Modificar parametros.");
                 Console.WriteLine("2.- Alberti.");
                 Console.WriteLine("3.- Vigenere - Por Tabla.");
-                Console.WriteLine("3.- Vigenere - Por modulo de 26.");
+                Console.WriteLine("4.- Vigenere - Por modulo de 26.");
                 Console.WriteLine("0.- Salir.");
                 opcion = Console.ReadKey().KeyChar - 48;
 
@@ -95,8 +97,16 @@ namespace Algoritmos_de_cifrado
                                 Console.WriteLine("Error: " + error.Message);
                             }
 
+                            //if(miConfiguracion.Memoria)
+                            //{
+                            //    foreach (Proceso proceso in miMemoria.Procesos)
+                            //    {
+                            //        Console.WriteLine(proceso.ToString());
+                            //    }
+                            //}
+
                             Console.ReadKey();
-                            
+
                             break;
                         }
                     case 4:
@@ -107,15 +117,23 @@ namespace Algoritmos_de_cifrado
                             {
                                 Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
                                 Console.WriteLine("Llave: " + miConfiguracion.Llave);
-                                Console.WriteLine("Criptograma: " + Algoritmos.VigenereM2(miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.Cifrar));
+                                Console.WriteLine("Criptograma: " + Algoritmos.VigenereM2(miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.Cifrar, (miConfiguracion.Memoria ? miMemoria : null)));
                             }
                             catch (Exception error)
                             {
                                 Console.WriteLine("Error: " + error.Message);
                             }
 
-                            Console.ReadKey();
+                            if (miConfiguracion.Memoria)
+                            {
+                                foreach (Proceso proceso in miMemoria.Procesos)
+                                {
+                                    Console.WriteLine(proceso.ToString());
+                                }
+                            }
 
+                            Console.ReadKey();
+                            
                             break;
                         }
                     default:
@@ -140,6 +158,7 @@ namespace Algoritmos_de_cifrado
                 Console.WriteLine("4.- Rotacion (Alberti)");
                 Console.WriteLine("5.- Direccion");
                 Console.WriteLine("6.- Cifrar/Descifrar");
+                Console.WriteLine("7.- Memoria");
                 Console.WriteLine("--Presione Esc para salir.");
                 opcion = Console.ReadKey();
 
@@ -222,6 +241,33 @@ namespace Algoritmos_de_cifrado
                         Console.WriteLine("Ingrese una opcion valida");
 
                     } while (aux.Key != ConsoleKey.C || aux.Key != ConsoleKey.D);
+                }
+
+                if (opcion.Key == ConsoleKey.D7)
+                {
+                    Console.Clear();
+                    Console.WriteLine(miConfiguracion.Memoria ? "La Memoria se encuentra encendida" : "La memoria se encuentra apagada");
+                    Console.WriteLine("Desea encender o apagar la memoria? - (E)ncender | (A)pagar");
+                    ConsoleKeyInfo aux;
+                    do
+                    {
+                        aux = Console.ReadKey();
+
+                        if (aux.Key == ConsoleKey.E)
+                        {
+                            miConfiguracion.Memoria = true;
+                            break;
+                        }
+
+                        if (aux.Key == ConsoleKey.A)
+                        {
+                            miConfiguracion.Memoria = false;
+                            break;
+                        }
+
+                        Console.WriteLine("Ingrese una opcion valida");
+
+                    } while (aux.Key != ConsoleKey.A || aux.Key != ConsoleKey.E);
                 }
 
             } while (opcion.Key != ConsoleKey.Escape);

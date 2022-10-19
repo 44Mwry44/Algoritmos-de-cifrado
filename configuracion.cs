@@ -8,9 +8,11 @@ namespace Algoritmos_de_cifrado
 {
     internal class configuracion
     {
-        string _strMensaje = "CPYOIMEQARPRSLQF"; //"laverdadquesediga";
+        string _strMensaje = "CPYOIMEQARPRSLQF";//"laverdadquesediga";.//;//"cesarelemperador";
         string _strLlave = "algoritmoclasico";
         bool _boolCifrar = true;
+        bool _boolMostrarProceso = false;
+        bool _boolMemoria = true;
 
         int _intCaracteresPorRotacion = 5;
         int _intRotacion = 5;
@@ -65,6 +67,18 @@ namespace Algoritmos_de_cifrado
         {
             get { return _boolCifrar; }
             set { _boolCifrar = value; }
+        }
+
+        public bool MostrarProceso
+        {
+            get { return _boolMostrarProceso; }
+            set { _boolMostrarProceso = value; }
+        }
+
+        public bool Memoria
+        {
+            get { return _boolMemoria; }
+            set { _boolMemoria = value; }
         }
     }
 }

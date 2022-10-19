@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Algoritmos.cs" />
     <Compile Include="configuracion.cs" />
+    <Compile Include="memoria.cs" />
+    <Compile Include="proceso.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

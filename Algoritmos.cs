@@ -141,6 +141,7 @@ namespace Algoritmos_de_cifrado
 
         public static string VigenereM1(string mensaje, string llave, bool cifrar)
         {
+            //Matriz en castellano
             //char[,] matriz = new char[,]
             //        { { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'},
             //          { 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A'},
@@ -170,6 +171,7 @@ namespace Algoritmos_de_cifrado
             //          { 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X'},
             //          { 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'} };
 
+            //Alfabeto inglés
             char[,] matriz = new char[,]
                     { { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'},
                       { 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A'},
@@ -236,35 +238,75 @@ namespace Algoritmos_de_cifrado
             return criptograma;
         }
 
-        public static string VigenereM2(string mensaje, string llave, bool cifrar)
+        public static string VigenereM2(string mensaje, string llave, bool cifrar, memoria memoria)
         {
             int posicionLlave = 0;
             string cifrado = "";
 
+            List<int> tempMensaje = new List<int>();
+            List<int> tempLlave = new List<int>();
+            List<int> tempSuma = new List<int>();
+            List<int> tempMod = new List<int>();
+
             mensaje = mensaje.ToUpper();
             llave = llave.ToUpper();
+
+            
 
             for (int x = 0; x < mensaje.Length; x++)
             {
                 int auxMensaje = 0;
                 int auxLlave = 0;
 
-                if(posicionLlave == llave.Length)
+
+                if (posicionLlave == llave.Length)
                 {
                     posicionLlave = 0;
                 }
 
-                if(cifrar)
+                auxMensaje = mensaje[x] - 65;
+                auxLlave = llave[posicionLlave] - 65;
+
+                if (cifrar)
                 {
-                    auxMensaje = mensaje[x] - 65;
-                    auxLlave = llave[posicionLlave] - 65;
-                    cifrado += (auxMensaje + auxLlave) % 26;
+                    cifrado += (char)((auxMensaje + auxLlave) % 26 + 65);
+
+                    tempMensaje.Add(mensaje[x] - 65);
+                    tempLlave.Add(llave[posicionLlave] - 65);
+                    tempSuma.Add(auxMensaje + auxLlave);
+                    tempMod.Add(cifrado[x] - 65);
                 }
                 else
                 {
-                    cifrado += (auxMensaje - auxLlave) % 26;
+
+                    if (auxMensaje - auxLlave < 0)
+                    {
+                        cifrado += (char)((auxMensaje - auxLlave + 26) % 26 + 65);
+                        tempMensaje.Add(auxMensaje);
+                        tempLlave.Add(auxLlave);
+                        tempMod.Add(cifrado[x] - 65);
+                        posicionLlave++;
+                        continue;
+                    }
+
+                    cifrado += (char)((auxMensaje - auxLlave) % 26  + 65);
+                    tempMensaje.Add(auxMensaje);
+                    tempLlave.Add(auxLlave);
+                    tempMod.Add(cifrado[x] - 65);
                 }
+
+                posicionLlave++;
             }
+
+            Proceso guardarLlave = new Proceso("VigenereM2", "guardarLlave", tempLlave, true);
+            Proceso guardarMensaje = new Proceso("VigenereM2", "guardarMensaje", tempMensaje, true);
+            Proceso guardarSuma = new Proceso("VigenereM2", "guardarSuma", tempSuma, false);
+            Proceso guardarMod = new Proceso("VigenereM2", "guardarMod", tempMod, false);
+
+            memoria.Procesos.Add(guardarLlave);
+            memoria.Procesos.Add(guardarMensaje);
+            memoria.Procesos.Add(guardarSuma);
+            memoria.Procesos.Add(guardarMod);
 
             return cifrado;
         }

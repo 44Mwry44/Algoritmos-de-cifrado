@@ -15,11 +15,11 @@ namespace Algoritmos_de_cifrado
             int opcion;
 
             configuracion miConfiguracion = new configuracion();
-            memoria miMemoria = new memoria();
 
             while (!salir)
             {   
                 Console.Clear();
+                memoria miMemoria = new memoria();
 
                 Console.WriteLine("Datos---------------------------------");
                 Console.WriteLine("Mensaje: \t" + miConfiguracion.Mensaje);
@@ -33,6 +33,7 @@ namespace Algoritmos_de_cifrado
                 Console.WriteLine("2.- Alberti.");
                 Console.WriteLine("3.- Vigenere - Por Tabla.");
                 Console.WriteLine("4.- Vigenere - Por modulo de 26.");
+                Console.WriteLine("4.- Beufort");
                 Console.WriteLine("0.- Salir.");
                 opcion = Console.ReadKey().KeyChar - 48;
 
@@ -86,24 +87,37 @@ namespace Algoritmos_de_cifrado
                         {
                             Console.Clear();
 
+                            Console.WriteLine("Desea utilizar esta configuracion?");
+                            Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                            Console.WriteLine("(Y/N)");
+
+                            ConsoleKeyInfo aux = Console.ReadKey();
+
+                            if (aux.Key == ConsoleKey.N)
+                            {
+                                ModificarConfiguracion(ref miConfiguracion);
+                            }
+
+                            Console.Clear();
+
                             try
                             {
                                 Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
                                 Console.WriteLine("Llave: " + miConfiguracion.Llave);
-                                Console.WriteLine("Criptograma: " + Algoritmos.VigenereM1(miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.Cifrar));
+                                Console.WriteLine("Criptograma: " + Algoritmos.VigenereM1(miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.Cifrar, (miConfiguracion.Memoria ? miMemoria : null)));
                             }
                             catch (Exception error)
                             {
                                 Console.WriteLine("Error: " + error.Message);
                             }
 
-                            //if(miConfiguracion.Memoria)
-                            //{
-                            //    foreach (Proceso proceso in miMemoria.Procesos)
-                            //    {
-                            //        Console.WriteLine(proceso.ToString());
-                            //    }
-                            //}
+                            if (miConfiguracion.Memoria)
+                            {
+                                foreach (Proceso proceso in miMemoria.Procesos)
+                                {
+                                    Console.WriteLine(proceso.ToString());
+                                }
+                            }
 
                             Console.ReadKey();
 
@@ -112,6 +126,17 @@ namespace Algoritmos_de_cifrado
                     case 4:
                         {
                             Console.Clear();
+
+                            Console.WriteLine("Desea utilizar esta configuracion?");
+                            Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                            Console.WriteLine("(Y/N)");
+
+                            ConsoleKeyInfo aux = Console.ReadKey();
+
+                            if (aux.Key == ConsoleKey.N)
+                            {
+                                ModificarConfiguracion(ref miConfiguracion);
+                            }
 
                             try
                             {
@@ -134,6 +159,47 @@ namespace Algoritmos_de_cifrado
 
                             Console.ReadKey();
                             
+                            break;
+                        }
+                    case 5:
+                        {
+                            Console.Clear();
+
+                            Console.WriteLine("Desea utilizar esta configuracion?");
+                            Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                            Console.WriteLine("(Y/N)");
+
+                            ConsoleKeyInfo aux = Console.ReadKey();
+
+                            if (aux.Key == ConsoleKey.N)
+                            {
+                                ModificarConfiguracion(ref miConfiguracion);
+                            }
+
+                            Console.Clear();
+
+                            try
+                            {
+                                Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
+                                Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                                Console.WriteLine("Criptograma: " + Algoritmos.Beufort(miConfiguracion.Mensaje, miConfiguracion.Llave, miConfiguracion.Cifrar, (miConfiguracion.Memoria ? miMemoria : null)));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
+
+                            if (miConfiguracion.Memoria)
+                            {
+                                foreach (Proceso proceso in miMemoria.Procesos)
+                                {
+                                    Console.WriteLine(proceso.ToString());
+                                }
+                            }
+
+                            Console.ReadKey();
+
+                            break;
                             break;
                         }
                     default:

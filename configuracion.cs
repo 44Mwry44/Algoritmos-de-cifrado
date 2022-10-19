@@ -8,7 +8,7 @@ namespace Algoritmos_de_cifrado
 {
     internal class configuracion
     {
-        string _strMensaje = "CPYOIMEQARPRSLQF";//"laverdadquesediga";.//;//"cesarelemperador";
+        string _strMensaje = "cesarelemperador";//"laverdadquesediga";.////"CPYOIMEQARPRSLQF";
         string _strLlave = "algoritmoclasico";
         bool _boolCifrar = true;
         bool _boolMostrarProceso = false;

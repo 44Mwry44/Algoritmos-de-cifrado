@@ -139,7 +139,7 @@ namespace Algoritmos_de_cifrado
             }
         }
 
-        public static string VigenereM1(string mensaje, string llave, bool cifrar)
+        public static string VigenereM1(string mensaje, string llave, bool cifrar, memoria memoria)
         {
             //Matriz en castellano
             //char[,] matriz = new char[,]
@@ -207,6 +207,8 @@ namespace Algoritmos_de_cifrado
             mensaje = mensaje.ToUpper();
             llave = llave.ToUpper();
 
+            List<int> tempCoordenadas;
+
             for (int x = 0; x < mensaje.Length; x++)
             {
                 if(posicionLlave == llave.Length)
@@ -217,6 +219,15 @@ namespace Algoritmos_de_cifrado
                 if(cifrar)
                 {
                     criptograma += matriz[mensaje[x] - 65, llave[posicionLlave] - 65];
+
+                    if (memoria != null)
+                    {
+                        tempCoordenadas = new List<int>();
+                        tempCoordenadas.Add(mensaje[x] - 65);
+                        tempCoordenadas.Add(llave[posicionLlave] - 65);
+                        Proceso miProceso = new Proceso("Vigenere", "Coordenada # " + (x + 1).ToString(), tempCoordenadas, false);
+                        memoria.Procesos.Add(miProceso);
+                    }
                 }
                 else
                 {
@@ -229,6 +240,15 @@ namespace Algoritmos_de_cifrado
                         }
                     }
                     criptograma += matriz[row, 0];
+
+                    if (memoria != null)
+                    {
+                        tempCoordenadas = new List<int>();
+                        tempCoordenadas.Add(row);
+                        tempCoordenadas.Add(0);
+                        Proceso miProceso = new Proceso("VigenereM1", "Coordenada # " + (x + 1).ToString(), tempCoordenadas, false);
+                        memoria.Procesos.Add(miProceso);
+                    }
                 }
 
                 posicionLlave++;
@@ -302,6 +322,109 @@ namespace Algoritmos_de_cifrado
             Proceso guardarMensaje = new Proceso("VigenereM2", "guardarMensaje", tempMensaje, true);
             Proceso guardarSuma = new Proceso("VigenereM2", "guardarSuma", tempSuma, false);
             Proceso guardarMod = new Proceso("VigenereM2", "guardarMod", tempMod, false);
+
+            memoria.Procesos.Add(guardarLlave);
+            memoria.Procesos.Add(guardarMensaje);
+            memoria.Procesos.Add(guardarSuma);
+            memoria.Procesos.Add(guardarMod);
+
+            return cifrado;
+        }
+
+        public static string Beufort(string mensaje, string llave, bool cifrar, memoria memoria)
+        {
+            char[,] matriz = new char[,]
+            {
+                {'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B'},
+                {'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C'},
+                {'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D'},
+                {'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E'},
+                {'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F'},
+                {'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G'},
+                {'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H'},
+                {'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I'},
+                {'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J'},
+                {'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K'},
+                {'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L'},
+                {'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M'},
+                {'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N'},
+                {'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O'},
+                {'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P'},
+                {'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q'},
+                {'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R'},
+                {'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S'},
+                {'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T'},
+                {'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V', 'U'},
+                {'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W', 'V'},
+                {'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X', 'W'},
+                {'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y', 'X'},
+                {'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z', 'Y'},
+                {'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'Z'},
+                {'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'}
+            };
+
+            int posicionLlave = 0;
+            string cifrado = "";
+
+            List<int> tempMensaje = new List<int>();
+            List<int> tempLlave = new List<int>();
+            List<int> tempSuma = new List<int>();
+            List<int> tempMod = new List<int>();
+
+            mensaje = mensaje.ToUpper();
+            llave = llave.ToUpper();
+
+            List<int> tempCoordenadas;
+
+            for (int x = 0; x < mensaje.Length; x++)
+            {
+                int auxMensaje = 0;
+                int auxLlave = 0;
+
+
+                if (posicionLlave == llave.Length)
+                {
+                    posicionLlave = 0;
+                }
+
+                auxMensaje = mensaje[x] - 65;
+                auxLlave = llave[posicionLlave] - 65;
+
+                if (cifrar)
+                {
+                    cifrado += (char)((auxMensaje - auxLlave + 26) % 26 + 65);
+
+                    tempMensaje.Add(mensaje[x] - 65);
+                    tempLlave.Add(llave[posicionLlave] - 65);
+                    tempSuma.Add(auxMensaje + auxLlave);
+                    tempMod.Add(cifrado[x] - 65);
+                }
+                else
+                {
+
+                    if (auxMensaje - auxLlave < 0)
+                    {
+                        cifrado += (char)((auxMensaje + auxLlave + 26) % 26 + 65);
+                        tempMensaje.Add(auxMensaje);
+                        tempLlave.Add(auxLlave);
+                        tempMod.Add(cifrado[x] - 65);
+                        posicionLlave++;
+                        continue;
+                    }
+
+                    cifrado += (char)((auxMensaje - auxLlave) % 26 + 65);
+                    tempMensaje.Add(auxMensaje);
+                    tempLlave.Add(auxLlave);
+                    tempMod.Add(cifrado[x] - 65);
+                }
+
+                posicionLlave++;
+            }
+
+            Proceso guardarLlave = new Proceso("Beufort", "guardarLlave", tempLlave, true);
+            Proceso guardarMensaje = new Proceso("Beufort", "guardarMensaje", tempMensaje, true);
+            Proceso guardarSuma = new Proceso("Beufort", "guardarSuma", tempSuma, false);
+            Proceso guardarMod = new Proceso("Beufort", "guardarMod", tempMod, false);
 
             memoria.Procesos.Add(guardarLlave);
             memoria.Procesos.Add(guardarMensaje);

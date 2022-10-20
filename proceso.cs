@@ -13,6 +13,11 @@ namespace Algoritmos_de_cifrado
         string _strNombre = "";
         bool _boolEsMensajeLlave = false;
 
+        public Proceso()
+        {
+
+        }
+
         public Proceso(string strMetodo, string strNombre, List<int> lstLista, bool boolEsMensajeLlave)
         {
             _strMetodo = strMetodo;

@@ -463,5 +463,126 @@ namespace Algoritmos_de_cifrado
 
             return cifrado;
         }
+
+        public static string Vernam(string mensaje, string llave, memoria memoria)
+        {
+            string criptograma = "";
+
+            mensaje = mensaje.ToUpper();
+            llave = llave.ToLower();
+
+            List<string> byteMensaje = new List<string>();
+            List<string> byteLlave = new List<string>();
+            List<string> byteCripto = new List<string>();
+
+            //Obtengo el byte de cada caracter
+            for(int x = 0; x < mensaje.Length; x++)
+            {
+                byteMensaje.Add(DecimalAByte(mensaje[x]));
+                byteLlave.Add(DecimalAByte(llave[x]));
+            }
+
+            //Ejecuto la operacion XOR en cada bit para obtener el nuevo byte
+            for (int x = 0; x < byteMensaje.Count; x++)
+            {
+                string auxCripto = "";
+                
+                for (int y = 0; y < byteMensaje.ElementAt(x).Length; y++)
+                {
+                    bool aux1 = byteMensaje.ElementAt(x)[y] == '1' ? true : false;
+                    bool aux2 = byteLlave.ElementAt(x)[y] == '1' ? true : false;
+
+                    if (aux1 ^ aux2)
+                    {
+                        auxCripto += '1';
+                    }
+                    else
+                    {
+                        auxCripto += '0';
+                    }
+
+                }
+
+                byteCripto.Add(auxCripto);
+            }
+
+            for(int x = 0; x < byteCripto.Count; x++)
+            {
+                criptograma += (char)Convert.ToInt32(byteCripto.ElementAt(x), 2);
+            }
+
+            return criptograma;
+        }
+
+        static string DecimalAByte(int numero)
+        {
+            string binario = "", aux = "";
+            char[] auxArray;
+
+            //Console.WriteLine("Decimal a convertir: " + numero.ToString());
+
+            if (numero == 0)
+            {
+                return "00000000";
+            }
+
+            if (numero < 128)
+            {
+                binario += '0';
+            }
+
+            if (numero < 64)
+            {
+                binario += '0';
+            }
+
+            if (numero < 32)
+            {
+                binario += '0';
+            }
+
+            if (numero < 16)
+            {
+                binario += '0';
+            }
+
+            if (numero < 8)
+            {
+                binario += '0';
+            }
+
+            if (numero < 4)
+            {
+                binario += '0';
+            }
+
+            if (numero < 2)
+            {
+                binario += '0';
+            }
+
+            if (numero < 1)
+            {
+                binario += '0';
+                return binario;
+            }
+
+            while(numero > 0)
+            {
+                aux += numero % 2;
+                numero = numero / 2;
+            }
+
+            auxArray = aux.ToCharArray();
+
+            foreach(char bit in auxArray.Reverse())
+            {
+                binario += bit;
+            }
+
+            //Console.WriteLine("Byte: " + binario);
+
+            return binario;
+        }
     }
 }

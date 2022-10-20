@@ -33,7 +33,8 @@ namespace Algoritmos_de_cifrado
                 Console.WriteLine("2.- Alberti.");
                 Console.WriteLine("3.- Vigenere - Por Tabla.");
                 Console.WriteLine("4.- Vigenere - Por modulo de 26.");
-                Console.WriteLine("4.- Beufort");
+                Console.WriteLine("5.- Beufort");
+                Console.WriteLine("6.- Vernam");
                 Console.WriteLine("0.- Salir.");
                 opcion = Console.ReadKey().KeyChar - 48;
 
@@ -208,6 +209,41 @@ namespace Algoritmos_de_cifrado
                             Console.ReadKey();
 
                             break;
+                        }
+                    case 6:
+                        {
+                            Console.Clear();
+
+                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                            Console.WriteLine("-----------------------------------------------------------------------------");
+                            Console.WriteLine("Desea utilizar esta configuracion?");
+                            Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
+                            Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                            Console.WriteLine("(Y/N)");
+
+                            ConsoleKeyInfo aux = Console.ReadKey();
+
+                            if (aux.Key == ConsoleKey.N)
+                            {
+                                ModificarConfiguracion(ref miConfiguracion);
+                            }
+
+                            Console.Clear();
+
+                            try
+                            {
+                                Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
+                                Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                                Console.WriteLine("Criptograma: " + Algoritmos.Vernam(miConfiguracion.Mensaje, miConfiguracion.Llave, (miConfiguracion.Memoria ? miMemoria : null)));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
+                            
+
+                            Console.ReadKey();
+                            
                             break;
                         }
                     default:

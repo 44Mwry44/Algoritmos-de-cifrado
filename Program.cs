@@ -234,7 +234,7 @@ namespace Algoritmos_de_cifrado
                             {
                                 Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
                                 Console.WriteLine("Llave: " + miConfiguracion.Llave);
-                                Console.WriteLine("Criptograma: " + Algoritmos.Vernam(miConfiguracion.Mensaje, miConfiguracion.Llave, (miConfiguracion.Memoria ? miMemoria : null)));
+                                Console.WriteLine("Criptograma: " + Algoritmos.Vernam(miConfiguracion.Mensaje, miConfiguracion.Llave));
                             }
                             catch (Exception error)
                             {

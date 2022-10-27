@@ -10,7 +10,7 @@ namespace Algoritmos_de_cifrado
     {
         //direccion = false | izquierda
         //direccion = true  | derecha
-        public static string Alberti(List<char> discoExterno, List<char> discoInterno, string mensaje, string llave, int caracteresPorRotacion, int rotacion, bool direccion, bool cifrar, memoria memoria)
+        public static string Alberti(List<char> discoExterno, List<char> discoInterno, string mensaje, string llave, int caracteresPorRotacion, int rotacion, bool direccion, bool cifrar, memoria memoria = null)
         {
             int aux = 1;
             int numRotacion = 1;
@@ -169,7 +169,7 @@ namespace Algoritmos_de_cifrado
             }
         }
 
-        public static string VigenereM1(string mensaje, string llave, bool cifrar, memoria memoria)
+        public static string VigenereM1(string mensaje, string llave, bool cifrar, memoria memoria = null)
         {
             //Matriz en castellano
             //char[,] matriz = new char[,]
@@ -288,7 +288,7 @@ namespace Algoritmos_de_cifrado
             return criptograma;
         }
 
-        public static string VigenereM2(string mensaje, string llave, bool cifrar, memoria memoria)
+        public static string VigenereM2(string mensaje, string llave, bool cifrar, memoria memoria = null)
         {
             int posicionLlave = 0;
             string cifrado = "";
@@ -361,7 +361,7 @@ namespace Algoritmos_de_cifrado
             return cifrado;
         }
 
-        public static string Beufort(string mensaje, string llave, bool cifrar, memoria memoria)
+        public static string Beufort(string mensaje, string llave, bool cifrar, memoria memoria = null)
         {
             char[,] matriz = new char[,]
             {
@@ -403,8 +403,6 @@ namespace Algoritmos_de_cifrado
 
             mensaje = mensaje.ToUpper();
             llave = llave.ToUpper();
-
-            List<int> tempCoordenadas;
 
             for (int x = 0; x < mensaje.Length; x++)
             {
@@ -464,7 +462,7 @@ namespace Algoritmos_de_cifrado
             return cifrado;
         }
 
-        public static string Vernam(string mensaje, string llave, memoria memoria)
+        public static string Vernam(string mensaje, string llave, memoria memoria = null)
         {
             string criptograma = "";
 

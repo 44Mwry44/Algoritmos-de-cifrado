@@ -35,8 +35,13 @@ namespace Algoritmos_de_cifrado
                 Console.WriteLine("4.- Vigenere - Por modulo de 26.");
                 Console.WriteLine("5.- Beufort");
                 Console.WriteLine("6.- Vernam");
+                Console.WriteLine("7.- Inversa");
+                Console.WriteLine("8.- Simple");
+                Console.WriteLine("9.- Doble");
+                Console.WriteLine("10.- Por grupos");
+                Console.WriteLine("11.- Por series");
                 Console.WriteLine("0.- Salir.");
-                opcion = Console.ReadKey().KeyChar - 48;
+                opcion = int.Parse(Console.ReadLine());
 
                 switch (opcion)
                 {
@@ -244,6 +249,71 @@ namespace Algoritmos_de_cifrado
 
                             Console.ReadKey();
                             
+                            break;
+                        }
+                    case 7:
+                        {
+                            Console.Clear();
+
+                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                            Console.WriteLine("Puede contener espacios | No requiere llave");
+                            Console.WriteLine("-----------------------------------------------------------------------------");
+
+                            Console.WriteLine("Criptograma: " + Algoritmos.Inversa(miConfiguracion.Mensaje));
+
+                            Console.ReadKey();
+                            break;
+                        }
+                    case 8:
+                        {
+                            Console.Clear();
+
+                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                            Console.WriteLine("No requiere llave");
+                            Console.WriteLine("-----------------------------------------------------------------------------");
+
+                            Console.WriteLine("Criptograma: " + Algoritmos.Simple(miConfiguracion.Mensaje));
+
+                            Console.ReadKey();
+                            break;
+                        }
+                    case 9:
+                        {
+                            Console.Clear();
+
+                            
+
+                            Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
+                            Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                            Console.WriteLine("Criptograma: " + Algoritmos.Doble(miConfiguracion.Mensaje, miConfiguracion.IterarHastaDesencriptar));
+
+                            Console.ReadKey();
+                            break;
+                        }
+                    case 10:
+                        {
+                            Console.Clear();
+
+                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                            Console.WriteLine("No requiere llave");
+                            Console.WriteLine("-----------------------------------------------------------------------------");
+
+                            Console.WriteLine("Criptograma: " + Algoritmos.PorGrupos(miConfiguracion.Mensaje, miConfiguracion.Llave));
+
+                            Console.ReadKey();
+                            break;
+                        }
+                    case 11:
+                        {
+                            Console.Clear();
+
+                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                            Console.WriteLine("No requiere llave");
+                            Console.WriteLine("-----------------------------------------------------------------------------");
+
+                            Console.WriteLine("Criptograma: " + Algoritmos.PorSeries(miConfiguracion.Mensaje, miConfiguracion.LstReglas, miConfiguracion.Cifrar));
+
+                            Console.ReadKey();
                             break;
                         }
                     default:

@@ -703,5 +703,161 @@ namespace Algoritmos_de_cifrado
 
             return criptograma;
         }
+
+        public static string PorSeries(string mensaje, List<Regla> reglas, bool cifrar)
+        {
+            string criptograma = "";
+            List<List<int>> posiciones = new List<List<int>>();
+
+            mensaje = mensaje.ToUpper();
+
+            //Crea las listas de posiciones segun cada regla
+            foreach(Regla regla in reglas)
+            {
+                List<int> auxPosiciones = new List<int>();
+                
+                if(regla.NumerosNaturales)
+                {
+                    for (int x = 0; x < mensaje.Length; x++)
+                    {
+                        auxPosiciones.Add(x);
+                    }
+
+                    if(posiciones.Count == 0)
+                    {
+                        break;
+                    }
+
+                    posiciones.Add(auxPosiciones);
+
+                    continue;
+                }
+
+                if(regla.NumerosPrimos)
+                {
+                    for (int x = 2; x < mensaje.Length; x++)
+                    {
+                        bool primo = true;
+                        
+                        if (x == 2)
+                        {
+                            primo = true;
+                            auxPosiciones.Add(x);
+                            continue;
+
+                        }
+
+                        if (x % 2 == 0) 
+                        {
+                            primo = false;
+                            continue;
+                        }
+
+                        var boundary = (int)Math.Floor(Math.Sqrt(x));
+
+                        for (int i = 3; i <= boundary; i += 2)
+                        {
+                            if (x % i == 0)
+                            {
+                                primo = false;
+                                break;
+                            }
+                            primo = true;
+                            break;
+                        }
+
+                        if(primo)
+                        {
+                            auxPosiciones.Add(x);
+                        }
+                    }
+
+                    posiciones.Add(auxPosiciones);
+
+                    continue;
+                }
+
+                if(regla.NumerosPares)
+                {
+                    for (int x = 2; x < mensaje.Length; x += 2)
+                    {
+                        auxPosiciones.Add(x);
+                    }
+
+                    posiciones.Add(auxPosiciones);
+
+                    continue;
+                }
+
+                if(regla.NumerosImpares)
+                {
+                    for (int x = 1; x < mensaje.Length; x += 2)
+                    {
+                        auxPosiciones.Add(x);
+                    }
+
+                    posiciones.Add(auxPosiciones);
+
+                    continue;
+                }
+
+                if(regla.Multiplo)
+                {
+                    for (int x = regla.MultiploDe; x < mensaje.Length; x += regla.MultiploDe)
+                    {
+                        auxPosiciones.Add(x);
+                    }
+
+                    posiciones.Add(auxPosiciones);
+
+                    continue;
+                }
+            }
+
+            List<int> posicionesCripto = new List<int>();
+            
+            //Ciclo en cada lista de posiciones (de acuerdo a las reglas)
+            foreach(List<int> posicionesReglas in posiciones)
+            {
+                //Ciclo por cada posicion de cada regla
+                foreach(int posicion in posicionesReglas)
+                {
+                    //Si la posicion no existe en la lista de orden del cripto, la agrega
+                    if(!posicionesCripto.Contains(posicion))
+                    {
+                        posicionesCripto.Add(posicion);
+                    }
+                }
+            }
+
+            if(cifrar)
+            {
+                //Reacomoda el mensaje de acuerdo a las posiciones finales obtenidas
+                foreach (int posicion in posicionesCripto)
+                {
+                    Console.Write(posicion.ToString() + ' ');
+                    criptograma += mensaje[posicion - 1];
+                }
+            }
+            else
+            {
+                char[] aux = new char[mensaje.Length];
+                int posicionAux = 0;
+
+                foreach (int posicion in posicionesCripto)
+                {
+                    Console.Write(posicion.ToString() + ' ');
+                    aux[posicion - 1] = mensaje[posicionAux];
+                    posicionAux++;
+                }
+
+                foreach(char caracter in aux)
+                {
+                    criptograma += caracter;
+                }
+            }
+
+            return criptograma;
+        }
     }
 }

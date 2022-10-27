@@ -8,8 +8,8 @@ namespace Algoritmos_de_cifrado
 {
     internal class configuracion
     {
-        string _strMensaje = "vernam";//"laverdadquesediga";.////"CPYOIMEQARPRSLQF";
-        string _strLlave = "playas";//"algoritmoclasico";
+        string _strMensaje = "ALZIARINMOEOGNASTLMSEOLUVAJTECEOSIKILTROPRSUD";//"laverdadquesediga";.////"CPYOIMEQARPRSLQF";
+        string _strLlave = "13542";//"algoritmoclasico";
         bool _boolCifrar = true;
         bool _boolMostrarProceso = false;
         bool _boolMemoria = true;
@@ -20,6 +20,10 @@ namespace Algoritmos_de_cifrado
 
         List<char> _lstDiscoExterno = new List<char> { 'A', 'O', 'D', 'X', '1', 'C', 'G', 'K', 'B', '8', 'M', '4', 'R', 'F', 'U', 'I', 'Y', '2', 'L', '6', 'Ñ', 'S', 'H', 'Q', '5', 'W', '7', 'E', 'V', '9', 'N', 'J', 'P', 'Z', 'T', '3' };
         List<char> _lstDiscoInterno = new List<char> { 'a', '!', 'x', '0', 'j', 't', '@', '$', 'g', 'z', 'w', '&', 'e', 'o', 'p', 'h', '%', 'ñ', 'd', 'r', '=', 'c', 's', '?', 'm', '#', 'n', 'f', 'k', 'u', 'l', 'i', 'b', 'y', 'q', 'v' };
+
+        List<Regla> _lstReglas = new List<Regla>();
+
+        bool _iterarHastaDesencriptar = true;
 
         public string Mensaje
         {
@@ -79,6 +83,54 @@ namespace Algoritmos_de_cifrado
         {
             get { return _boolMemoria; }
             set { _boolMemoria = value; }
+        }
+
+        public bool IterarHastaDesencriptar
+        {
+            get { return _iterarHastaDesencriptar; }
+            set { _iterarHastaDesencriptar = value; }
+        }
+
+        public List<Regla> LstReglas
+        {
+            get { return _lstReglas; }
+            set { _lstReglas = value; }
+        }
+
+        public configuracion()
+        {
+            //Regla regla1 = new Regla();
+            //regla1.Multiplo = true;
+            //regla1.MultiploDe = 4;
+
+            //Regla regla2 = new Regla();
+            //regla2.Multiplo = true;
+            //regla2.MultiploDe = 3;
+
+            //Regla regla3 = new Regla();
+            //regla3.NumerosImpares = true;
+
+            //Regla regla4 = new Regla();
+            //regla4.NumerosPares = true;
+
+            //LstReglas.Add(regla1);
+            //LstReglas.Add(regla2);
+            //LstReglas.Add(regla3);
+            //LstReglas.Add(regla4);
+
+            Regla regla1 = new Regla();
+            regla1.NumerosPrimos = true;
+
+            Regla regla2 = new Regla();
+            regla1.Multiplo = true;
+            regla1.MultiploDe = 5;
+
+            Regla regla3 = new Regla();
+            regla3.NumerosNaturales = true;
+
+            LstReglas.Add(regla1);
+            LstReglas.Add(regla2);
+            LstReglas.Add(regla3);
         }
     }
 }

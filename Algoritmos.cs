@@ -582,5 +582,124 @@ namespace Algoritmos_de_cifrado
 
             return binario;
         }
+
+        public static string Inversa(string mensaje)
+        {
+            string criptograma = "";
+            char[] aux;
+            aux = mensaje.ToCharArray();
+            
+            foreach(char caracter in aux.Reverse())
+            {
+                criptograma += caracter;
+            }
+
+            return criptograma;
+        }
+
+        public static string Simple(string mensaje)
+        {
+            string criptograma = "";
+
+            mensaje.Trim(' ');
+
+            if(mensaje.Length % 2 != 0)
+            {
+                mensaje += 'x';
+            }
+
+            string aux1 = "", aux2 = "";
+
+            for(int x = 0; x < mensaje.Length; x++)
+            {
+                if(x % 2 == 0)
+                {
+                    aux1 += mensaje[x];
+                }
+                else
+                {
+                    aux2 += mensaje[x];
+                }
+            }
+
+            criptograma = aux1 + aux2;
+
+            return criptograma;
+        }
+
+        public static string Doble(string mensaje, bool iterarHastaDesencriptar = false)
+        {
+            string criptograma = "";
+
+            criptograma = Simple(mensaje);
+
+            criptograma = Simple(criptograma);
+
+            int iteraciones = 1;
+
+            if (iterarHastaDesencriptar)
+            {
+                do
+                {
+                    criptograma = Simple(criptograma);
+                    iteraciones++;
+                } while (criptograma != mensaje);
+
+                criptograma += " " + iteraciones.ToString();
+            }
+
+            return criptograma;
+        }
+
+        public static string PorGrupos(string mensaje, string llave)
+        {
+
+            if(mensaje.Length % llave.Length != 0)
+            {
+                throw new Exception("El mensaje no corresponde a la longitud de la llave");
+            }
+
+
+            string criptograma = "";
+
+            List<string> subCadenas = new List<string>();
+
+            int aux = 0;
+
+            string subString = "";
+
+            for(int x = 0; x < mensaje.Length; x++)
+            {
+
+                if (aux == llave.Length)
+                {
+                    aux = 1;
+                    subCadenas.Add(subString);
+                    subString = "";
+                    subString += mensaje[x];
+                    continue;
+                }
+
+                if (aux < llave.Length)
+                {
+                    subString += mensaje[x];
+                }
+
+                aux++;
+            }
+
+            subCadenas.Add(subString);
+
+            foreach (string cadena in subCadenas)
+            {
+                Console.WriteLine(cadena);
+                foreach(char numero in llave)
+                {
+                    criptograma += cadena[int.Parse(numero.ToString()) - 1];
+                }
+            }
+
+            return criptograma;
+        }
     }
 }

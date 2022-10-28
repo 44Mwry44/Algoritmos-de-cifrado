@@ -255,11 +255,18 @@ namespace Algoritmos_de_cifrado
                         {
                             Console.Clear();
 
-                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
-                            Console.WriteLine("Puede contener espacios | No requiere llave");
-                            Console.WriteLine("-----------------------------------------------------------------------------");
+                            try
+                            {
+                                Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                                Console.WriteLine("Puede contener espacios | No requiere llave");
+                                Console.WriteLine("-----------------------------------------------------------------------------");
 
-                            Console.WriteLine("Criptograma: " + Algoritmos.Inversa(miConfiguracion.Mensaje));
+                                Console.WriteLine("Criptograma: " + Algoritmos.Inversa(miConfiguracion.Mensaje));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
 
                             Console.ReadKey();
                             break;
@@ -268,11 +275,18 @@ namespace Algoritmos_de_cifrado
                         {
                             Console.Clear();
 
-                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
-                            Console.WriteLine("No requiere llave");
-                            Console.WriteLine("-----------------------------------------------------------------------------");
+                            try
+                            {
+                                Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                                Console.WriteLine("No requiere llave");
+                                Console.WriteLine("-----------------------------------------------------------------------------");
 
-                            Console.WriteLine("Criptograma: " + Algoritmos.Simple(miConfiguracion.Mensaje));
+                                Console.WriteLine("Criptograma: " + Algoritmos.Simple(miConfiguracion.Mensaje));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
 
                             Console.ReadKey();
                             break;
@@ -281,11 +295,16 @@ namespace Algoritmos_de_cifrado
                         {
                             Console.Clear();
 
-                            
-
-                            Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
-                            Console.WriteLine("Llave: " + miConfiguracion.Llave);
-                            Console.WriteLine("Criptograma: " + Algoritmos.Doble(miConfiguracion.Mensaje, miConfiguracion.IterarHastaDesencriptar));
+                            try
+                            {
+                                Console.WriteLine("Mensaje: " + miConfiguracion.Mensaje);
+                                Console.WriteLine("Llave: " + miConfiguracion.Llave);
+                                Console.WriteLine("Criptograma: " + Algoritmos.Doble(miConfiguracion.Mensaje, miConfiguracion.IterarHastaDesencriptar));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }  
 
                             Console.ReadKey();
                             break;
@@ -294,11 +313,18 @@ namespace Algoritmos_de_cifrado
                         {
                             Console.Clear();
 
-                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
-                            Console.WriteLine("No requiere llave");
-                            Console.WriteLine("-----------------------------------------------------------------------------");
+                            try
+                            {
+                                Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                                Console.WriteLine("No requiere llave");
+                                Console.WriteLine("-----------------------------------------------------------------------------");
 
-                            Console.WriteLine("Criptograma: " + Algoritmos.PorGrupos(miConfiguracion.Mensaje, miConfiguracion.Llave));
+                                Console.WriteLine("Criptograma: " + Algoritmos.PorGrupos(miConfiguracion.Mensaje, miConfiguracion.Llave));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
 
                             Console.ReadKey();
                             break;
@@ -307,11 +333,18 @@ namespace Algoritmos_de_cifrado
                         {
                             Console.Clear();
 
-                            Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
-                            Console.WriteLine("No requiere llave");
-                            Console.WriteLine("-----------------------------------------------------------------------------");
+                            try
+                            {
+                                Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                                Console.WriteLine("No requiere llave");
+                                Console.WriteLine("-----------------------------------------------------------------------------");
 
-                            Console.WriteLine("Criptograma: " + Algoritmos.PorSeries(miConfiguracion.Mensaje, miConfiguracion.LstReglas, miConfiguracion.Cifrar));
+                                Console.WriteLine("Criptograma: " + Algoritmos.PorSeries(miConfiguracion.Mensaje, miConfiguracion.LstReglas, miConfiguracion.Cifrar));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
 
                             Console.ReadKey();
                             break;

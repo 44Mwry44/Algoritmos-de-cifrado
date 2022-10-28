@@ -716,7 +716,7 @@ namespace Algoritmos_de_cifrado
                 
                 if(regla.NumerosNaturales)
                 {
-                    for (int x = 0; x < mensaje.Length; x++)
+                    for (int x = 1; x < mensaje.Length; x++)
                     {
                         auxPosiciones.Add(x);
                     }
@@ -739,7 +739,6 @@ namespace Algoritmos_de_cifrado
                         
                         if (x == 2)
                         {
-                            primo = true;
                             auxPosiciones.Add(x);
                             continue;
 
@@ -761,7 +760,6 @@ namespace Algoritmos_de_cifrado
                                 break;
                             }
                             primo = true;
-                            break;
                         }
 
                         if(primo)
@@ -801,7 +799,7 @@ namespace Algoritmos_de_cifrado
 
                 if(regla.Multiplo)
                 {
-                    for (int x = regla.MultiploDe; x < mensaje.Length; x += regla.MultiploDe)
+                    for (int x = regla.MultiploDe; x <= mensaje.Length; x += regla.MultiploDe)
                     {
                         auxPosiciones.Add(x);
                     }
@@ -833,18 +831,22 @@ namespace Algoritmos_de_cifrado
                 //Reacomoda el mensaje de acuerdo a las posiciones finales obtenidas
                 foreach (int posicion in posicionesCripto)
                 {
-                    Console.Write(posicion.ToString() + ' ');
+                    //Console.Write(posicion.ToString() + ' ');
                     criptograma += mensaje[posicion - 1];
                 }
             }
             else
             {
+                //Arreglo que contiene las posiciones de cada letra del mensaje
                 char[] aux = new char[mensaje.Length];
+
+                //Indice de posición en el mensaje.
                 int posicionAux = 0;
 
                 foreach (int posicion in posicionesCripto)
                 {
-                    Console.Write(posicion.ToString() + ' ');
+                    //Console.Write(posicion.ToString() + ' ');
+                    //Coloco en el arreglo, segun la posición del mensaje original, la letra del mensaje cifrado
                     aux[posicion - 1] = mensaje[posicionAux];
                     posicionAux++;
                 }

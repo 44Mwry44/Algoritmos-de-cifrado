@@ -122,8 +122,8 @@ namespace Algoritmos_de_cifrado
             regla1.NumerosPrimos = true;
 
             Regla regla2 = new Regla();
-            regla1.Multiplo = true;
-            regla1.MultiploDe = 5;
+            regla2.Multiplo = true;
+            regla2.MultiploDe = 5;
 
             Regla regla3 = new Regla();
             regla3.NumerosNaturales = true;

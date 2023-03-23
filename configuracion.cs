@@ -8,8 +8,8 @@ namespace Algoritmos_de_cifrado
 {
     internal class configuracion
     {
-        string _strMensaje = "ALZIARINMOEOGNASTLMSEOLUVAJTECEOSIKILTROPRSUD";//"laverdadquesediga";.////"CPYOIMEQARPRSLQF";
-        string _strLlave = "13542";//"algoritmoclasico";
+        string _strMensaje = "ElMeLoRobo";//"ALZIARINMOEOGNASTLMSEOLUVAJTECEOSIKILTROPRSUD";//"laverdadquesediga";.////"CPYOIMEQARPRSLQF";
+        string _strLlave = "Marte";//"algoritmoclasico";
         bool _boolCifrar = true;
         bool _boolMostrarProceso = false;
         bool _boolMemoria = true;
@@ -121,12 +121,18 @@ namespace Algoritmos_de_cifrado
             Regla regla1 = new Regla();
             regla1.NumerosPrimos = true;
 
+            //Regla regla2 = new Regla();
+            //regla2.Multiplo = true;
+            //regla2.MultiploDe = 5;
+
+            //Regla regla3 = new Regla();
+            //regla3.NumerosNaturales = true;
+
             Regla regla2 = new Regla();
-            regla2.Multiplo = true;
-            regla2.MultiploDe = 5;
+            regla2.NumerosPares = true;
 
             Regla regla3 = new Regla();
-            regla3.NumerosNaturales = true;
+            regla3.NumerosImpares = true;
 
             LstReglas.Add(regla1);
             LstReglas.Add(regla2);

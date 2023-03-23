@@ -335,11 +335,31 @@ namespace Algoritmos_de_cifrado
 
                             try
                             {
-                                Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                                //Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
                                 Console.WriteLine("No requiere llave");
                                 Console.WriteLine("-----------------------------------------------------------------------------");
 
                                 Console.WriteLine("Criptograma: " + Algoritmos.PorSeries(miConfiguracion.Mensaje, miConfiguracion.LstReglas, miConfiguracion.Cifrar));
+                            }
+                            catch (Exception error)
+                            {
+                                Console.WriteLine("Error: " + error.Message);
+                            }
+
+                            Console.ReadKey();
+                            break;
+                        }
+                    case 12:
+                        {
+                            Console.Clear();
+
+                            try
+                            {
+                                /*Console.WriteLine("ESTE MÉTODO ES INDIFERENTE DEL MODO | CIFRA O DECIFRA DEPENDIENDO DEL MENSAJE");
+                                Console.WriteLine("No requiere llave");
+                                Console.WriteLine("-----------------------------------------------------------------------------");*/
+
+                                Console.WriteLine("Criptograma: " + Algoritmos.Playfair(miConfiguracion.Mensaje, miConfiguracion.Llave));
                             }
                             catch (Exception error)
                             {

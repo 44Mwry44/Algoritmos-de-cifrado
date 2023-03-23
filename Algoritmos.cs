@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -855,6 +856,118 @@ namespace Algoritmos_de_cifrado
                 {
                     criptograma += caracter;
                 }
+            }
+
+            return criptograma;
+        }
+
+        public static string Playfair(string mensaje, string llave)
+        {
+            mensaje = mensaje.ToLower();
+            llave = llave.ToLower();
+
+            if (mensaje.Length % 2 != 0)
+            {
+                mensaje += "x";
+            }
+
+            //reemplazar las j's por i's
+            llave = llave.Replace('j', 'i');
+
+            string criptograma = "";
+
+            //Arreglo que contiene las letras del abecedario
+            List<char> abecedario = new List<char>();
+
+            for (int x = 97; x <= 122; x++)
+            {
+                if (x == 106) continue;
+                abecedario.Add((char)x);
+            }
+
+            //Arreglo que contiene las letras de la llave sin repetir
+            List<char> llaveSinRepetir = new List<char>();
+
+            foreach (char letra in llave)
+            {
+                if (!llaveSinRepetir.Contains(letra))
+                {
+                    llaveSinRepetir.Add(letra);
+                }
+            }
+
+            //arreglo con el alfabeto mas la llave sin repetir
+            List<char> alfabetoLlave = new List<char>();
+
+            foreach (char letra in llaveSinRepetir)
+            {
+                alfabetoLlave.Add(letra);
+            }
+
+            foreach (char letra in abecedario)
+            {
+                if (!alfabetoLlave.Contains(letra))
+                {
+                    alfabetoLlave.Add(letra);
+                }
+            }
+
+            //ciclo que obtiene las coordenadas de cada letra del mensaje
+            List<string> coordenadas = new List<string>();
+
+            for (int posicionMensaje = 0; posicionMensaje < mensaje.Length; posicionMensaje++)
+            {
+                for (int columna = 0; columna < 5; columna++)
+                {
+                    bool encontrado = false;
+                    for (int fila = 0; fila < 5; fila++)
+                    {
+                        if (alfabetoLlave.ElementAt(columna * 5 + fila) == mensaje[posicionMensaje])
+                        {
+                            coordenadas.Add((columna).ToString() + fila.ToString());
+                            encontrado = true;
+                            break;
+                        }
+                    }
+                    if (encontrado) break;
+                }
+            }
+
+            foreach (char letra in alfabetoLlave)
+            {
+                Console.Write(letra + " ");
+            }
+
+            for (int posicionCoordenadas = 0; posicionCoordenadas < coordenadas.Count; posicionCoordenadas += 2)
+            {
+                int columna1 = int.Parse(coordenadas.ElementAt(posicionCoordenadas)[0].ToString());
+                int fila1 = int.Parse(coordenadas.ElementAt(posicionCoordenadas)[1].ToString());
+
+                int columna2 = int.Parse(coordenadas.ElementAt(posicionCoordenadas + 1)[0].ToString());
+                int fila2 = int.Parse(coordenadas.ElementAt(posicionCoordenadas + 1)[1].ToString());
+
+                if (fila1 == fila2)
+                {
+                    criptograma += alfabetoLlave.ElementAt((columna1 + 1) * 5 + fila1);
+                    criptograma += alfabetoLlave.ElementAt((columna2 + 1) * 5 + fila2);
+                }
+
+                if(columna1 == columna2)
+                {
+                    criptograma += alfabetoLlave.ElementAt(columna1 * 5 + (fila1 + 1));
+                    criptograma += alfabetoLlave.ElementAt(columna2 * 5 + (fila2 + 1));
+                }
+
+                if(fila1 == columna2)
+                {
+                    criptograma += alfabetoLlave.ElementAt(columna2 * 5 + fila1);
+                    criptograma += alfabetoLlave.ElementAt(columna1 * 5 + fila2);
+                }
+            }
+
+            foreach (string coordenada in coordenadas)
+            {
+                Console.Write(coordenada + " ");
             }
 
             return criptograma;

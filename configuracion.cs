@@ -8,8 +8,8 @@ namespace Algoritmos_de_cifrado
 {
     internal class configuracion
     {
-        string _strMensaje = "ElMeLoRobo";//"ALZIARINMOEOGNASTLMSEOLUVAJTECEOSIKILTROPRSUD";//"laverdadquesediga";.////"CPYOIMEQARPRSLQF";
-        string _strLlave = "Marte";//"algoritmoclasico";
+        string _strMensaje = "luis";//"ALZIARINMOEOGNASTLMSEOLUVAJTECEOSIKILTROPRSUD";//"laverdadquesediga";.////"CPYOIMEQARPRSLQF";
+        string _strLlave = "mauricio";//"algoritmoclasico";
         bool _boolCifrar = true;
         bool _boolMostrarProceso = false;
         bool _boolMemoria = true;

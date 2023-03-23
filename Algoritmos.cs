@@ -866,13 +866,14 @@ namespace Algoritmos_de_cifrado
             mensaje = mensaje.ToLower();
             llave = llave.ToLower();
 
-            if (mensaje.Length % 2 != 0)
-            {
-                mensaje += "x";
-            }
-
             //reemplazar las j's por i's
             llave = llave.Replace('j', 'i');
+            mensaje = mensaje.Replace('j', 'i');
+
+            if (mensaje.Length % 2 != 0)
+            {
+                mensaje = mensaje + "x";
+            }
 
             string criptograma = "";
 
@@ -938,6 +939,11 @@ namespace Algoritmos_de_cifrado
                 Console.Write(letra + " ");
             }
 
+            foreach (string coordenada in coordenadas)
+            {
+                Console.Write(coordenada + " ");
+            }
+
             for (int posicionCoordenadas = 0; posicionCoordenadas < coordenadas.Count; posicionCoordenadas += 2)
             {
                 int columna1 = int.Parse(coordenadas.ElementAt(posicionCoordenadas)[0].ToString());
@@ -948,20 +954,51 @@ namespace Algoritmos_de_cifrado
 
                 if (fila1 == fila2)
                 {
+                    if(columna1 == 4)
+                    {
+                        criptograma += alfabetoLlave.ElementAt(0 + fila1);
+                        criptograma += alfabetoLlave.ElementAt((columna2 + 1) * 5 + fila2);
+                        continue;
+                    }
+                    if(columna2 == 4)
+                    {
+                        criptograma += alfabetoLlave.ElementAt((columna1 + 1) * 5 + fila1);
+                        criptograma += alfabetoLlave.ElementAt(0 + fila2);
+                        continue;
+                    }
+
                     criptograma += alfabetoLlave.ElementAt((columna1 + 1) * 5 + fila1);
                     criptograma += alfabetoLlave.ElementAt((columna2 + 1) * 5 + fila2);
+                    continue;
                 }
 
                 if(columna1 == columna2)
                 {
+
+                    if(fila1 == 4)
+                    {
+                        criptograma += alfabetoLlave.ElementAt(columna1 * 5);
+                        criptograma += alfabetoLlave.ElementAt(columna2 * 5 + (fila2 + 1));
+                        continue;
+                    }
+
+                    if(fila2 == 4)
+                    {
+                        criptograma += alfabetoLlave.ElementAt(columna1 * 5 + (fila1 + 1));
+                        criptograma += alfabetoLlave.ElementAt(columna2 * 5);
+                        continue;
+                    }
+
                     criptograma += alfabetoLlave.ElementAt(columna1 * 5 + (fila1 + 1));
                     criptograma += alfabetoLlave.ElementAt(columna2 * 5 + (fila2 + 1));
+                    continue;
                 }
 
-                if(fila1 == columna2)
+                if(fila1 != fila2 && columna1 != columna2 )
                 {
-                    criptograma += alfabetoLlave.ElementAt(columna2 * 5 + fila1);
                     criptograma += alfabetoLlave.ElementAt(columna1 * 5 + fila2);
+                    criptograma += alfabetoLlave.ElementAt(columna2 * 5 + fila1);
+                    continue;
                 }
             }
 
@@ -970,7 +1007,7 @@ namespace Algoritmos_de_cifrado
                 Console.Write(coordenada + " ");
             }
 
-            return criptograma;
+            return criptograma.ToUpper();
         }
     }
 }

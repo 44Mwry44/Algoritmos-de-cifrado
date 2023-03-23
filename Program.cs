@@ -40,6 +40,7 @@ namespace Algoritmos_de_cifrado
                 Console.WriteLine("9.- Doble");
                 Console.WriteLine("10.- Por grupos");
                 Console.WriteLine("11.- Por series");
+                Console.WriteLine("12.- Playfair");
                 Console.WriteLine("0.- Salir.");
                 opcion = int.Parse(Console.ReadLine());
 
